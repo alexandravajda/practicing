@@ -1,0 +1,16 @@
+---
+title: "Plopper"
+author: "Alexandra Vajda"
+date: "22/05/2019"
+output: html_document
+---
+
+```{r}
+mydata <- read.csv(file = "3.1.txt", sep = ",", header = TRUE)
+dim(mydata)
+str(mydata)
+```
+```{r}
+
+```
+
