@@ -37,5 +37,17 @@ prop.table(mytable)
 ```{r}
 mytablecomb <- cbind(mytable, prop.table(mytable), cumsum(prop.table(mytable)))
 mytablecomb
+
+```
+
+```{r}
+colnames(mytablecomb) <- c("Freq", "Perc", "Cum")
+mytablecomb
+```
+```{r}
+mytablecomb
+```
+```{r}
+plot(mydata$cohort90, mydata$score, ylim = c(0,80))
 ```
 
