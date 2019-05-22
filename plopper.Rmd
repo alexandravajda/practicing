@@ -11,6 +11,9 @@ dim(mydata)
 str(mydata)
 ```
 ```{r}
+mydata [1:20, ]
+```
+```{r}
 
 ```
 
