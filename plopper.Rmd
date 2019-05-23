@@ -92,4 +92,11 @@ estd <- rstandard(fit)
 qqnorm(estd)
 qqline(estd)
 ```
+#Producing the standardised residuals vs. fixed part prediction (score) plot:
+```{r}
+plot(predscore, estd)
+```
+```{r}
+
+```
 
