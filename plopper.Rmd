@@ -77,4 +77,19 @@ summary(fit)
 predscore <- predict(fit)
 plot(mydata$cohort90, predscore, type = "l")
 ```
+#The previous method was not efficient computationally. We simply need to run the command for a subset of data that gives us the combinations of the two variables used to plot the graph. First, we need to make a matrix with the two objects and then reduce it with the unique command.
+```{r}
+uniquedata <- cbind(cohort90 = mydata$cohort90, predscore = predscore)
+uniquedata <- unique(uniquedata)
+uniquedata
+```
+```{r}
+plot(uniquedata[, 1], uniquedata[,2], xlab = "cohort", ylab = "predscore", type = "l")
+```
+#Model checking: checking assumptions. The score value has a high proportion of zeros. We have to check the distribution of the residuals. We will look at two plot: 1. standardised residuals vs. normal scores (normal plot), and 2. standardised residuals vs fixed part prediction.
+```{r}
+estd <- rstandard(fit)
+qqnorm(estd)
+qqline(estd)
+```
 

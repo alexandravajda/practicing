@@ -328,6 +328,117 @@
 \end{Shaded}
 
 \includegraphics{plopper_files/figure-latex/unnamed-chunk-11-1.pdf}
+\#Tapply command applies a function to each group of values given by the
+levels of the specified factor. \#The first line calculates the lenght
+of score for each value of cohort90, providing the number of
+observations for each level of cohort90. \#The second line calculates
+the mean value of score separately for each value of cohort90. \#The
+third line calculates the standard deviation of score for each cohort.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{l <-}\StringTok{ }\KeywordTok{tapply}\NormalTok{(mydata}\OperatorTok{$}\NormalTok{score, }\KeywordTok{factor}\NormalTok{(mydata}\OperatorTok{$}\NormalTok{cohort90), length)}
+\NormalTok{m <-}\StringTok{ }\KeywordTok{tapply}\NormalTok{(mydata}\OperatorTok{$}\NormalTok{score, }\KeywordTok{factor}\NormalTok{(mydata}\OperatorTok{$}\NormalTok{cohort90), mean)}
+\NormalTok{s <-}\StringTok{ }\KeywordTok{tapply}\NormalTok{(mydata}\OperatorTok{$}\NormalTok{score, }\KeywordTok{factor}\NormalTok{(mydata}\OperatorTok{$}\NormalTok{cohort90), sd)}
+\NormalTok{tableScore <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\StringTok{"Freq"}\NormalTok{ =}\StringTok{ }\NormalTok{l, }\StringTok{"mean(score)"}\NormalTok{=}\StringTok{ }\NormalTok{m, }\StringTok{"sd(score)"}\NormalTok{ =}\StringTok{ }\NormalTok{s)}
+\NormalTok{tableScore}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Freq mean(score) sd(score)
+## -6 6478    23.65545  18.07995
+## -4 6325    24.77265  17.37533
+## -2 5245    28.52450  15.93629
+## 0  4371    29.10043  15.76355
+## 6  4244    39.43473  13.55147
+## 8  7325    41.33065  13.00926
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cor}\NormalTok{(mydata}\OperatorTok{$}\NormalTok{score, mydata}\OperatorTok{$}\NormalTok{cohort90)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.4088625
+\end{verbatim}
+
+\section{Linear regression model}\label{linear-regression-model}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(score }\OperatorTok{~}\StringTok{ }\NormalTok{cohort90, }\DataTypeTok{data =}\NormalTok{ mydata)}
+\KeywordTok{summary}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = score ~ cohort90, data = mydata)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -41.31 -11.73   0.56  12.20  46.20 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 30.72873    0.08582  358.04   <2e-16 ***
+## cohort90     1.32214    0.01601   82.59   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 15.8 on 33986 degrees of freedom
+## Multiple R-squared:  0.1672, Adjusted R-squared:  0.1671 
+## F-statistic:  6822 on 1 and 33986 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\section{Adding the linear plot}\label{adding-the-linear-plot}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{predscore <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(fit)}
+\KeywordTok{plot}\NormalTok{(mydata}\OperatorTok{$}\NormalTok{cohort90, predscore, }\DataTypeTok{type =} \StringTok{"l"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{plopper_files/figure-latex/unnamed-chunk-15-1.pdf}
+\#The previous method was not efficient computationally. We simply need
+to run the command for a subset of data that gives us the combinations
+of the two variables used to plot the graph. First, we need to make a
+matrix with the two objects and then reduce it with the unique command.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{uniquedata <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\DataTypeTok{cohort90 =}\NormalTok{ mydata}\OperatorTok{$}\NormalTok{cohort90, }\DataTypeTok{predscore =}\NormalTok{ predscore)}
+\NormalTok{uniquedata <-}\StringTok{ }\KeywordTok{unique}\NormalTok{(uniquedata)}
+\NormalTok{uniquedata}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    cohort90 predscore
+## 1        -6  22.79586
+## 11       -4  25.44015
+## 18       -2  28.08444
+## 23        0  30.72873
+## 27        6  38.66159
+## 31        8  41.30588
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(uniquedata[, }\DecValTok{1}\NormalTok{], uniquedata[,}\DecValTok{2}\NormalTok{], }\DataTypeTok{xlab =} \StringTok{"cohort"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"predscore"}\NormalTok{, }\DataTypeTok{type =} \StringTok{"l"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{plopper_files/figure-latex/unnamed-chunk-17-1.pdf}
+\#\#Model checking: checking assumptions. The score value has a high
+proportion of zeros. We have to check the distribution of the residuals.
+We will look at two plot: 1. standardised residuals vs.~normal scores
+(normal plot), and 2. standardised residuals vs fixed part prediction.
 
 
 \end{document}
