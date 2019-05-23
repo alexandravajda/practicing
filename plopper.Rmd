@@ -55,10 +55,16 @@ plot(mydata$cohort90, mydata$score, ylim = c(0,80))
 ```
 #Tapply command applies a function to each group of values given by the levels of the specified factor.
 #The first line calculates the lenght of score for each value of cohort90, providing the number of observations for each level of cohort90.
+#The second line calculates the mean value of score separately for each value of cohort90.
+#The third line calculates the standard deviation of score for each cohort.
 ```{r}
 l <- tapply(mydata$score, factor(mydata$cohort90), length)
 m <- tapply(mydata$score, factor(mydata$cohort90), mean)
 s <- tapply(mydata$score, factor(mydata$cohort90), sd)
 tableScore <- cbind("Freq" = l, "mean(score)"= m, "sd(score)" = s)
+tableScore
+```
+```{r}
+cor(mydata$score, mydata$cohort90)
 ```
 
