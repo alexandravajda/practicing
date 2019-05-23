@@ -67,4 +67,14 @@ tableScore
 ```{r}
 cor(mydata$score, mydata$cohort90)
 ```
+#Linear regression model
+```{r}
+fit <- lm(score ~ cohort90, data = mydata)
+summary(fit)
+```
+#Adding the linear plot
+```{r}
+predscore <- predict(fit)
+plot(mydata$cohort90, predscore, type = "l")
+```
 
