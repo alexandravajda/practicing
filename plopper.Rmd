@@ -44,7 +44,7 @@ mytablecomb
 ```
 
 ```{r}
-colnames(mytablecomb) <- c("Freq", "Perc", "Cum")
+colnames(mytablecomb) <- c("Freq", "Perc", "Cumpilation")
 mytablecomb
 ```
 ```{r}
